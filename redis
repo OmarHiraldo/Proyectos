@@ -1,0 +1,17 @@
+import redis
+
+r = redis.Redis(
+  host='redis-16314.c11.us-east-1-3.ec2.redns.redis-cloud.com:16314',
+  port=16314,
+  password='Nw8kwiaaZkAtCtJctne1eHq4nUZyf6fu')
+
+
+pubsub = r.pubsub()
+pubsub.subscribe('test_channel')
+
+print("Suscrito al canal 'test_channel'")
+
+# Recibir y imprimir mensajes en tiempo real
+for message in pubsub.listen():
+    if message['type'] == 'message':
+        print(f"Mensaje recibido: {message['data'].decode('utf-8')}")
